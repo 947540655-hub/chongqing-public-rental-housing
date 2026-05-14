@@ -1,4 +1,3 @@
-!pip install plotly -q
 import streamlit as st
 import pandas as pd
 import plotly.express as px
@@ -9,12 +8,14 @@ st.set_page_config(page_title="重庆公租房数据新闻", layout="wide", init
 st.title("🏠 重庆市级公租房：供给·需求·生活")
 st.markdown("**数据新闻交互作品** | 21个市级公租房小区全景分析与个人决策工具")
 
-
-# 读取CSV数据（推荐方式）
+# 读取数据
 @st.cache_data
 def load_data():
-    return pd.read_csv("prh_data.csv")
-
+    try:
+        return pd.read_csv("prh_data.csv")
+    except:
+        st.error("CSV文件读取失败，请检查文件是否存在或格式是否正确")
+        return pd.DataFrame()
 
 df = load_data()
 
